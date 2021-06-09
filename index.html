@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+
+    <link rel="stylesheet" href="css/style.css">
+    <title>Sliding Puzzle</title>
+</head>
+
+<body>
+    
+    <div id="solved">
+        Solution
+        <ul id="solved-puzzle">
+        </ul>
+    </div>
+    <br>
+    <br>
+    <br>
+    <button onClick="window.location.reload();">Reset</button>
+    Puzzle
+    <div id="container">
+        <ul id="puzzle">
+        </ul>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="score-area">
+        <div id="stopwatch">
+            <h5>Time:</h5>
+            <p id="timer"></p>
+        </div>
+        <div id="moves-area">
+            <h5>Moves:</h5>
+            <p id="moves"></p>
+        </div>   
+    </div> 
+    <script src="js/script.js"></script>
+    
+</body>
+
+</html>
