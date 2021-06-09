@@ -1,0 +1,100 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body {
+    display: flex;
+    background-color: cyan;
+    text-align: center;
+    flex-direction: column;
+    padding-top: 2%;
+}
+#container {
+    width: 450px;
+    height: 440px;
+    margin: auto;
+    background-color:white;
+}
+
+#solved {
+    width: 90px;
+    height: 90px;
+    margin: 10px auto;
+}
+
+#solved ul li {
+    width: 30px;
+    height: 30px;
+    margin-top: 0px;
+}
+
+ul {
+    display: flex;
+    flex-wrap: wrap;
+    list-style-type: none;
+    justify-content: space-evenly;
+}
+
+#container ul li {
+    width: 84px;
+    height: 84px;
+    margin: 2px;
+    box-shadow: darkgray;
+}
+
+.score-area {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+#stopwatch {
+    width: 60%;
+    height: 50px;
+}
+#moves-area {
+    width: 40%;
+    height: 50px;
+}
+button {
+    margin-left: 70%;
+    margin-right: 20%;
+    height:50px;
+    background-color: red;
+}
+.white {
+    background: transparent;
+    z-index: 0;
+}
+
+.red {
+    background-color: red;
+    z-index: 1;
+    box-shadow:3px 3px 2px darkgray;
+
+}
+.blue {
+    background-color: blue;
+    z-index: 1;
+    box-shadow:3px 3px 2px darkgray;
+}
+.yellow {
+    background-color: yellow;
+    z-index: 1;
+    box-shadow:3px 3px 2px darkgray;
+}
+.green {
+    background-color: green;
+    z-index: 1;
+    box-shadow:3px 3px 2px darkgray;
+}
+.orange {
+    background-color: orange;
+    z-index: 1;
+    box-shadow:3px 3px 2px darkgray;
+}
+.violet {
+    background-color: violet;
+    z-index: 1;
+    box-shadow:3px 3px 2px darkgray;
+}
