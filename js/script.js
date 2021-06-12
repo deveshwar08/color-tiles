@@ -141,7 +141,6 @@ function addOnClick()
         let element = document.getElementById(id);
         element.setAttribute("onclick","clickingTile(id)");
     }
-    displayHighScore();
 }
 
 
