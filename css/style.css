@@ -8,25 +8,7 @@ body {
     background-color: cyan;
     text-align: center;
     flex-direction: column;
-    padding-top: 2%;
-}
-#container {
-    width: 450px;
-    height: 440px;
-    margin: auto;
-    background-color:white;
-}
-
-#solved {
-    width: 90px;
-    height: 90px;
-    margin: 10px auto;
-}
-
-#solved ul li {
-    width: 30px;
-    height: 30px;
-    margin-top: 0px;
+    align-content: center;
 }
 
 ul {
@@ -35,13 +17,55 @@ ul {
     list-style-type: none;
     justify-content: space-evenly;
 }
-
-#container ul li {
-    width: 84px;
-    height: 84px;
-    margin: 2px;
-    box-shadow: darkgray;
+.solved-easy {
+    width: 90px;
+    height: 90px;
+    background-color: white;
+    margin: auto;
 }
+
+.solved-easy ul li {
+    width: 28px;
+    height: 28px;
+    margin: 1px;
+}
+.solved-normal {
+    width: 120px;
+    height: 120px;
+    background-color: white;
+    margin: auto;
+}
+.solved-normal ul li {
+    width: 28px;
+    height: 28px;
+    margin: 1px;
+}
+
+.container-easy {
+    width: 425px;
+    height: 425px;
+    margin: auto;
+    background-color:white;
+}
+
+.container-easy ul li {
+    width: 81px;
+    height: 81px;
+    margin: 2px;
+}
+
+.container-normal {
+    width:510px;
+    height:510px;
+    margin: auto;
+    background-color: white;
+}
+.container-normal ul li {
+    width: 81px;
+    height:81px;
+    margin: 2px;
+}
+
 
 .score-area {
     display: flex;
@@ -97,4 +121,75 @@ button {
     background-color: violet;
     z-index: 1;
     box-shadow:3px 3px 2px darkgray;
+}
+@media (max-width: 480px){
+    .solved-easy {
+        height: 15vw;
+        width: 15vw;
+        background-color: white;
+        margin: auto;
+    }
+    
+    .solved-easy ul li {
+        width: 4.5vw;
+        height: 4.55vw;
+        margin: 0.25vw;
+    }
+    .solved-normal {
+        width: 16vw;
+        height: 16vw;
+        background-color: white;
+        margin: auto;
+    }
+    .solved-normal ul li {
+        width: 3.5vw;
+        height: 3.5vw;
+        margin: 0.25vw;
+    }
+
+    .container-easy {
+        width: 60vw;
+        height: 60vw;
+        margin: auto;
+        background-color:white;
+    }
+
+    .container-easy ul li {
+        width: 11vw;
+        height: 11vw;
+        margin: 0.5vw;
+    }
+
+    .container-normal {
+        width:60vw;
+        height:60vw;
+        margin: auto;
+        background-color: white;
+    }
+    .container-normal ul li {
+        width: 9vw;
+        height:9vw;
+        margin: 0.5vw;
+    }
+    .violet {
+        box-shadow: 0.25vw 0.25vw  darkgrey;
+    }
+    .red {
+        box-shadow: 0.25vw 0.25vw  darkgrey;
+    }
+    .blue {
+        box-shadow: 0.25vw 0.25vw  darkgrey;
+    }
+    .green {
+        box-shadow: 0.25vw 0.25vw  darkgrey;
+    }
+    .yellow {
+        box-shadow: 0.25vw 0.25vw  darkgrey;
+    }
+    .orange {
+        box-shadow: 0.25vw 0.25vw  darkgrey;
+    }
+    button {
+        height : 5vw;
+    }
 }
