@@ -122,6 +122,24 @@ button {
     z-index: 1;
     box-shadow:3px 3px 2px darkgray;
 }
+#high-score {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+.high-score-heading {
+    background-color: black;
+    color: white;
+    list-style: none;
+    padding: 10px;
+}
+#high-score li {
+    list-style: none;
+    background-color: white;
+    padding: 5px;
+    color: black;
+
+}
 @media (max-width: 480px){
     .solved-easy {
         height: 15vw;
