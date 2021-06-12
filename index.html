@@ -4,29 +4,31 @@
 <head>
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
     <meta content="utf-8" http-equiv="encoding">
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <audio id="win-music" src="res/win.wav" type="audio/wav"></audio>
+
 
     <link rel="stylesheet" href="css/style.css">
     <title>Sliding Puzzle</title>
 </head>
 
 <body>
-    
-    <div id="solved">
-        Solution
+    <div id="difficulty">
+        <input type="radio" name="difficulty" id="easy" onchange="toggleDifficulty()">Easy
+        <input type="radio" name="difficulty" id="normal" onchange="toggleDifficulty()">Normal
+    </div>
+    Solution
+    <div id="solved">        
         <ul id="solved-puzzle">
         </ul>
     </div>
     <br>
-    <br>
-    <br>
-    <button onClick="window.location.reload();">Reset</button>
+    <button onClick="addSolutionLi()">Reset</button>
     Puzzle
     <div id="container">
         <ul id="puzzle">
         </ul>
     </div>
-    <br>
-    <br>
     <br>
     <div class="score-area">
         <div id="stopwatch">
@@ -38,6 +40,12 @@
             <p id="moves"></p>
         </div>   
     </div> 
+    High Score
+    <div>
+        <ul id="high-score">
+
+        </ul>
+    </div>
     <script src="js/script.js"></script>
     
 </body>
