@@ -2,10 +2,9 @@ const colors = ["red","blue","yellow","orange","green","violet"];//reference for
 
 var mode = "easy";
 
-var name = "";
-var score = 0;
+var playerName = "";
 
-var highScore = {"Player-1" : 0};
+var defaultHighScore = [["Player-1", 1000],["Player-1", 1000],["Player-1", 1000],["Player-1", 1000],["Player-1", 1000]];
 
 var reference = {"tile-1":["tile-2","tile-6"],
 "tile-2":["tile-1","tile-3","tile-7"],
@@ -141,8 +140,48 @@ function addOnClick()
         let element = document.getElementById(id);
         element.setAttribute("onclick","clickingTile(id)");
     }
+    displayHighScore();
+}
+function displayHighScore()
+{
+    document.getElementById("high-score").innerHTML = "";
+    if(localStorage.getItem("highScore") == null)
+        localStorage.setItem("highScore",JSON.stringify(defaultHighScore));
+    let highScore = JSON.parse(localStorage.getItem("highScore"));
+    let highScoreTemp = [];
+
+    for (var i = 0; i < highScore.length; i++)
+        highScoreTemp[i] = highScore[i].slice();
+
+    highScoreTemp.sort(function(a, b) { return(parseInt(a[1]) - parseInt(b[1]));});
+    for(let i = 0;i < 5;i++)
+    {
+        let ul = document.getElementById("high-score");
+        let li = document.createElement("li");
+        let text = document.createTextNode(highScoreTemp[i][0] + " : " + highScoreTemp[i][1]);
+        li.appendChild(text);
+        ul.appendChild(li);
+    }
+    
+}
+function addScore()
+{
+    let highScore = JSON.parse(localStorage.getItem("highScore"));
+    let highScoreTemp = [];
+
+    for (var i = 0; i < highScore.length; i++)
+        highScoreTemp[i] = highScore[i].slice();
+    highScoreTemp.push([playerName, (parseInt(min)*60 + parseInt(sec))]);
+    localStorage.removeItem("highScore");
+    localStorage.setItem("highScore",JSON.stringify(highScoreTemp));
+    displayHighScore();
 }
 
+function getName()
+{
+    playerName = prompt("Hey!What's your name?");
+    addScore();
+}
 
 //create a list specifying the current state of game
 function getCurrentState(){
@@ -178,7 +217,7 @@ function checkSolution(puzzleSolution, currentState){
             element.onclick = null;
             solved = true;
         }
-        
+        getName();
     }
 } 
 
