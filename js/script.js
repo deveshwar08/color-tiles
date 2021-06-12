@@ -143,34 +143,7 @@ function addOnClick()
     }
     displayHighScore();
 }
-function displayHighScore()
-{
-    document.getElementById("high-score").innerHTML = "";
-    if(localStorage.getItem(highScore) == null)
-    {
-        alert("no");
-        localStorage.setItem(highScore);
 
-    }
-    highScore, {name : score};
-    localStorage.setItem(highScore)
-    let entries = Object.entries(highScore);
-    let sorted = entries.sort((a, b) => a[1] - b[1]);
-    for(let i = 0;i < 5;i++)
-    {
-        let ul = document.getElementById("high-score");
-        let li = document.createElement("LI");
-        let text = document.createTextNode(sorted[i]);
-        li.appendChild(text);
-        ul.appendChild(li);
-    }
-    
-}
-
-function getName()
-{
-    name = prompt("Hey!What's your name?");
-}
 
 //create a list specifying the current state of game
 function getCurrentState(){
@@ -206,7 +179,7 @@ function checkSolution(puzzleSolution, currentState){
             element.onclick = null;
             solved = true;
         }
-        getName();
+        
     }
 } 
 
