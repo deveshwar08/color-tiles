@@ -4,7 +4,7 @@ var mode = "easy";
 
 var playerName = "";
 
-var defaultHighScore = [["Player-1", 1000],["Player-1", 1000],["Player-1", 1000],["Player-1", 1000],["Player-1", 1000]];
+var defaultHighScore = [];
 
 var reference = {"tile-1":["tile-2","tile-6"],
 "tile-2":["tile-1","tile-3","tile-7"],
@@ -156,11 +156,14 @@ function displayHighScore()
     highScoreTemp.sort(function(a, b) { return(parseInt(a[1]) - parseInt(b[1]));});
     for(let i = 0;i < 5;i++)
     {
-        let ul = document.getElementById("high-score");
-        let li = document.createElement("li");
-        let text = document.createTextNode(highScoreTemp[i][0] + " : " + highScoreTemp[i][1]);
-        li.appendChild(text);
-        ul.appendChild(li);
+        if(highScoreTemp[i] != null)  
+        {        
+            let ul = document.getElementById("high-score");
+            let li = document.createElement("li");
+            let text = document.createTextNode(highScoreTemp[i][0] + " : " + highScoreTemp[i][1]);
+            li.appendChild(text);
+            ul.appendChild(li);
+        }
     }
     
 }
