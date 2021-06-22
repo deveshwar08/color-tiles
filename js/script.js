@@ -52,6 +52,7 @@ function addSolutionLi()
     sec = 0;
     min = 0;
     moves = 0;
+    solved = false;
     let parentElement = document.getElementById("solved-puzzle");
     parentElement.innerHTML = "";
     for(let i = 1;i <= inner*inner;i++)
