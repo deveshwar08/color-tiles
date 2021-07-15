@@ -5,34 +5,8 @@ var mode = "easy";
 var playerName = "";
 
 var defaultHighScore = [];
-
-var reference = {"tile-1":["tile-2","tile-6"],
-"tile-2":["tile-1","tile-3","tile-7"],
-"tile-3":["tile-2","tile-4","tile-8"],
-"tile-4":["tile-3","tile-9","tile-5"],
-"tile-5":["tile-4","tile-10"],
-"tile-6":["tile-1","tile-7","tile-11"],
-"tile-7":["tile-2","tile-6","tile-8","tile-12"],
-"tile-8":["tile-3","tile-7","tile-9","tile-13"],
-"tile-9":["tile-4","tile-8","tile-10","tile-14"],
-"tile-10":["tile-5","tile-9","tile-15"],
-"tile-11":["tile-6","tile-12","tile-16"],
-"tile-12":["tile-7","tile-11","tile-13","tile-17"],
-"tile-13":["tile-8","tile-12","tile-14","tile-18"],
-"tile-14":["tile-9","tile-13","tile-15","tile-19"],
-"tile-15":["tile-10","tile-14","tile-20"],
-"tile-16":["tile-11","tile-17","tile-21"],
-"tile-17":["tile-12","tile-16","tile-18","tile-22"],
-"tile-18":["tile-13","tile-17","tile-19","tile-23"],
-"tile-19":["tile-14","tile-18","tile-20","tile-24"],
-"tile-20":["tile-15","tile-19","tile-25"],
-"tile-21":["tile-16","tile-22"],
-"tile-22":["tile-17","tile-21","tile-23"],
-"tile-23":["tile-18","tile-22","tile-24"],
-"tile-24":["tile-19","tile-23","tile-25"],
-"tile-25":["tile-20","tile-24"]};//reference for tiles that can be swapped with empty tile
-var innerTiles = ["tile-7","tile-8","tile-9","tile-12","tile-13","tile-14","tile-17","tile-18","tile-19"];
-var outerTiles = ["tile-1","tile-2","tile-3","tile-4","tile-5","tile-6","tile-10","tile-11","tile-15","tile-16","tile-20","tile-21","tile-22","tile-23","tile-24","tile-25"];
+var innerTiles = [];
+var outerTiles = [];
 
 var numberOfColors = {"red":0,"blue":0,"yellow":0,"orange":0,"green":0,"violet":0};//number of each color used in the puzzle
 var puzzleSolution = [];//this is the puzzle solution
@@ -46,6 +20,23 @@ var moves = 0;
 
 document.getElementById("solved").className = "solved-easy";
 document.getElementById("container").className = "container-easy";
+
+function addInnerOuterTiles(){
+    innerTiles = [];
+    outerTiles = [];
+    for(let i = 1;i <= outer;i++)
+    {
+        for(let j = 1;j <= outer;j++)
+        {
+            if(i == 1 || j == 1 || i == outer || j == outer)
+                outerTiles.push("tile-" + i.toString() + j.toString());
+            else
+                innerTiles.push("tile-" + i.toString() + j.toString());
+        }
+    }
+    addSolutionLi();
+}
+
 
 function addSolutionLi()
 {
@@ -69,13 +60,17 @@ function addPuzzleLi()
 {
     let parentElement = document.getElementById("puzzle");
     parentElement.innerHTML="";
-    for(let i = 1;i <= outer*outer;i++)
+    for(let i = 1;i <= outer;i++)
     {
-        let element = document.createElement("li");
-        let id = i.toString();
-        id = "tile-"+id;
-        parentElement.appendChild(element);
-        element.id = id;      
+        for(let j = 1;j <= outer;j++)
+        {
+            let element = document.createElement("li");
+            let id = i.toString() + j.toString();
+            id = "tile-"+id;
+            parentElement.appendChild(element);
+            element.id = id;   
+        }
+
     }
 
     generatePuzzleSolution();
@@ -130,17 +125,20 @@ function generatePuzzle(numberOfColors){
         let element = document.getElementById(tile);//  assigns the colors to the elements using classes
         element.className = colors[rnd];
     }
-    document.getElementById("tile-"+outer*outer.toString()).className = "white";
+    document.getElementById("tile-"+outer.toString()+outer.toString()).className = "white";
     addOnClick();
 }
 function addOnClick()
 {
-    for(let i = 1;i <= outer*outer;i++)
+    for(let i = 1;i <= outer;i++)
     {
-        let id = i.toString();
-        id = "tile-"+id;
-        let element = document.getElementById(id);
-        element.setAttribute("onclick","clickingTile(id)");
+        for(let j = 1;j <= outer;j++)
+        {
+            let id = i.toString() + j.toString();
+            id = "tile-"+id;
+            let element = document.getElementById(id);
+            element.setAttribute("onclick","clickingTile(id)");
+        }
     }
     displayHighScore();
 }
@@ -169,6 +167,8 @@ function displayHighScore()
     }
     
 }
+
+
 function addScore()
 {
     let highScore = JSON.parse(localStorage.getItem("highScore"));
@@ -180,12 +180,6 @@ function addScore()
     localStorage.removeItem("highScore");
     localStorage.setItem("highScore",JSON.stringify(highScoreTemp));
     displayHighScore();
-}
-
-function getName()
-{
-    playerName = prompt("Hey!What's your name?");
-    addScore();
 }
 
 //create a list specifying the current state of game
@@ -214,15 +208,19 @@ function checkSolution(puzzleSolution, currentState){
     if(flag == 0)
     {
         document.getElementById("win-music").play();
-        for(let i = 1;i <= outer*outer;i++)
+        for(let i = 1;i <= outer;i++)
         {
-            let id = i.toString();
-            id = "tile-"+id;
-            let element = document.getElementById(id);
-            element.onclick = null;
-            solved = true;
+            for(let j = 1;j <= outer;j++)
+            {
+                let id = i.toString() + j.toString();
+                id = "tile-"+id;
+                let element = document.getElementById(id);
+                element.onclick = null;
+                solved = true;
+            }
         }
-        getName();
+        playerName = prompt("Hey!What's your name?");
+        addScore();
     }
 } 
 
@@ -230,15 +228,20 @@ function checkSolution(puzzleSolution, currentState){
 function checkReference(string1, string2)
 {
     let flag = 0;
-    if(reference.hasOwnProperty(string1))
-    {
-        reference[string1].forEach(checkFunction); 
-        function checkFunction(string)
-        {
-            if(string2 === string)
-                flag++;
-        }
-    }
+    let row1 = parseInt(string1.substr(5,1));
+    let col1 = parseInt(string1.substr(6,1));
+    let row2 = parseInt(string2.substr(5,1));
+    let col2 = parseInt(string2.substr(6,1));
+
+    if(row1 < 5 && row2 == row1 + 1 && col1 == col2)
+        flag++;
+    else if(row1 > 1 && row2 == row1 - 1 && col1 == col2)
+        flag++;
+    else if(col1 < 5 && col2 == col1 + 1 && row1 == row2)
+        flag++;
+    else if(col1 > 1 && col2 == col1 - 1 && row1 == row2)
+        flag++;
+    
     if(flag > 0)
         return true;
     else
@@ -299,33 +302,6 @@ function toggleDifficulty(){
     {
         inner = 3;
         outer = 5;
-        reference = {"tile-1":["tile-2","tile-6"],
-        "tile-2":["tile-1","tile-3","tile-7"],
-        "tile-3":["tile-2","tile-4","tile-8"],
-        "tile-4":["tile-3","tile-9","tile-5"],
-        "tile-5":["tile-4","tile-10"],
-        "tile-6":["tile-1","tile-7","tile-11"],
-        "tile-7":["tile-2","tile-6","tile-8","tile-12"],
-        "tile-8":["tile-3","tile-7","tile-9","tile-13"],
-        "tile-9":["tile-4","tile-8","tile-10","tile-14"],
-        "tile-10":["tile-5","tile-9","tile-15"],
-        "tile-11":["tile-6","tile-12","tile-16"],
-        "tile-12":["tile-7","tile-11","tile-13","tile-17"],
-        "tile-13":["tile-8","tile-12","tile-14","tile-18"],
-        "tile-14":["tile-9","tile-13","tile-15","tile-19"],
-        "tile-15":["tile-10","tile-14","tile-20"],
-        "tile-16":["tile-11","tile-17","tile-21"],
-        "tile-17":["tile-12","tile-16","tile-18","tile-22"],
-        "tile-18":["tile-13","tile-17","tile-19","tile-23"],
-        "tile-19":["tile-14","tile-18","tile-20","tile-24"],
-        "tile-20":["tile-15","tile-19","tile-25"],
-        "tile-21":["tile-16","tile-22"],
-        "tile-22":["tile-17","tile-21","tile-23"],
-        "tile-23":["tile-18","tile-22","tile-24"],
-        "tile-24":["tile-19","tile-23","tile-25"],
-        "tile-25":["tile-20","tile-24"]};
-        innerTiles = ["tile-7","tile-8","tile-9","tile-12","tile-13","tile-14","tile-17","tile-18","tile-19"];
-        outerTiles = ["tile-1","tile-2","tile-3","tile-4","tile-5","tile-6","tile-10","tile-11","tile-15","tile-16","tile-20","tile-21","tile-22","tile-23","tile-24","tile-25"];
         document.getElementById("solved").className = "solved-easy";
         document.getElementById("container").className = "container-easy";
     }
@@ -333,50 +309,12 @@ function toggleDifficulty(){
     {
         inner = 4;
         outer = 6;
-        reference = {"tile-1":["tile-2","tile-7"],
-        "tile-2":["tile-1","tile-3","tile-8"],
-        "tile-3":["tile-2","tile-4","tile-9"],
-        "tile-4":["tile-3","tile-5","tile-10"],
-        "tile-5":["tile-4","tile-6","tile-11"],
-        "tile-6":["tile-5","tile-12"],
-        "tile-7":["tile-1","tile-8","tile-13"],
-        "tile-8":["tile-2","tile-7","tile-9","tile-14"],
-        "tile-9":["tile-3","tile-8","tile-10","tile-15"],
-        "tile-10":["tile-4","tile-9","tile-11","tile-16"],
-        "tile-11":["tile-5","tile-10","tile-12","tile-17"],
-        "tile-12":["tile-6","tile-11","tile-18"],
-        "tile-13":["tile-7","tile-14","tile-19"],
-        "tile-14":["tile-8","tile-13","tile-15","tile-20"],
-        "tile-15":["tile-9","tile-14","tile-16","tile-21"],
-        "tile-16":["tile-10","tile-15","tile-17","tile-22"],
-        "tile-17":["tile-11","tile-16","tile-18","tile-23"],
-        "tile-18":["tile-12","tile-17","tile-24"],
-        "tile-19":["tile-13","tile-20","tile-25"],
-        "tile-20":["tile-14","tile-19","tile-21","tile-26"],
-        "tile-21":["tile-15","tile-20","tile-22","tile-27"],
-        "tile-22":["tile-16","tile-21","tile-23","tile-28"],
-        "tile-23":["tile-17","tile-22","tile-24","tile-29"],
-        "tile-24":["tile-18","tile-23","tile-30"],
-        "tile-25":["tile-19","tile-26","tile-31"],
-        "tile-26":["tile-20","tile-25","tile-27","tile-32"],
-        "tile-27":["tile-21","tile-26","tile-28","tile-33"],
-        "tile-28":["tile-22","tile-27","tile-29","tile-34"],
-        "tile-29":["tile-23","tile-28","tile-30","tile-35"],
-        "tile-30":["tile-24","tile-29","tile-36"],
-        "tile-31":["tile-25","tile-32"],
-        "tile-32":["tile-26","tile-31","tile-33"],
-        "tile-33":["tile-27","tile-32","tile-34"],
-        "tile-34":["tile-28","tile-33","tile-35"],
-        "tile-35":["tile-29","tile-34","tile-36"],
-        "tile-36":["tile-30","tile-35"]};
-        innerTiles = ["tile-8","tile-9","tile-10","tile-11","tile-14","tile-15","tile-16","tile-17","tile-20","tile-21","tile-22","tile-23","tile-26","tile-27","tile-28","tile-29"];
-        outerTiles = ["tile-1","tile-2","tile-3","tile-4","tile-5","tile-6","tile-7","tile-12","tile-13","tile-18","tile-19","tile-24","tile-25","tile-30","tile-31","tile-32","tile-33","tile-34","tile-35","tile-36"];
         document.getElementById("solved").className = "solved-normal";
         document.getElementById("container").className = "container-normal";
     }
-    addSolutionLi();
+    addInnerOuterTiles();
 }
 
-addSolutionLi();
+addInnerOuterTiles();
 setMoves();
 timerCycle();
